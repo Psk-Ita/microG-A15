@@ -1,6 +1,4 @@
 # microG-A15
-
-### By MOVZX and FatherJony and FriendlyNeighborhoodShane
 *A simple, basic microG istaller*
 **Licensed under the GNU GPL v3**
 
