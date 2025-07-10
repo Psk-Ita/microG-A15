@@ -1,0 +1,7 @@
+id=microG
+name=microG
+version=v2.2.28.231657
+versionCode=31
+author=Psk.It
+description=microG, PlayStore, SoundPicker
+updateJson=https://raw.githubusercontent.com/Psk-Ita/microG-A15/master/util/update.json

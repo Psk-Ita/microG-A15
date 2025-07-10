@@ -1,0 +1,171 @@
+# Config
+
+variant="microG";
+ver="2.2.28";
+verc="231657";
+date="9 july 2025";
+minsdk="31";
+
+modprop="id=$modname
+name=$variant for Android 15
+version=$ver
+versionCode=$verc
+author=MOVZX and FatherJony and FriendlyNeighborhoodShane
+description=microG, PlayStore, SoundPicker
+support=
+donate=
+minMagisk=1900
+";
+
+stuff="
+  /system/app/MicroGGSFProxy/MicroGGSFProxy.apk
+  /system/app/SoundPickerPrebuilt/SoundPickerPrebuilt.apk
+  /system/bin/npem
+  /system/etc/default-permissions/microg-permissions.xml
+  /system/etc/permissions/com.android.vending.xml
+  /system/etc/permissions/com.google.android.gms.xml
+  /system/etc/permissions/com.google.android.maps.xml
+  /system/etc/sysconfig/nogoolag.xml
+  /system/framework/com.google.android.maps.jar
+  /system/priv-app/Phonesky/Phonesky.apk
+  /system/priv-app/MicroGGMSCore/MicroGGMSCore.apk
+";
+
+stuff_arch="
+";
+
+stuff_sdk="
+";
+
+stuff_arch_sdk="
+";
+
+stuff_util="
+  /util/func-defconf.sh
+  /util/script-addon.sh
+  /util/script-init.sh
+";
+
+stuff_other="
+  /system/app/GoogleCalendarSyncAdapter/GoogleCalendarSyncAdapter.apk
+  /system/app/GoogleContactsSyncAdapter/GoogleContactsSyncAdapter.apk
+  /system/etc/default-permissions/gsync.xml
+  /system/etc/permissions/com.google.android.backuptransport.xml
+  /system/priv-app/GoogleBackupTransport/GoogleBackupTransport.apk
+";
+
+stuff_uninstall="$stuff $stuff_arch $stuff_sdk $stuff_arch_sdk $stuff_other";
+
+stuff_debloat="
+  /system/app/GmsCore/GmsCore.apk
+  /system/app/GooglePlay/GooglePlay.apk
+  /system/app/GoogleServicesFramework/GoogleServicesFramework.apk
+  /system/app/Phonesky/Phonesky.apk
+  /system/app/PlayStore/PlayStore.apk
+  /system/app/PrebuiltGmsCore/PrebuiltGmsCore.apk
+  /system/app/Vending/Vending.apk
+  /system/priv-app/GmsCore/GmsCore.apk
+  /system/priv-app/GooglePlay/GooglePlay.apk
+  /system/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk
+  /system/priv-app/Phonesky/Phonesky.apk
+  /system/priv-app/PlayStore/PlayStore.apk
+  /system/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk
+  /system/priv-app/Vending/Vending.apk
+
+  /system/app/AMAPNetworkLocation/AMAPNetworkLocation.apk
+  /system/app/BaiduNetworkLocation/BaiduNetworkLocation.apk
+  /system/app/LegacyNetworkLocation/LegacyNetworkLocation.apk
+  /system/app/NetworkLocation/NetworkLocation.apk
+  /system/priv-app/AMAPNetworkLocation/AMAPNetworkLocation.apk
+  /system/priv-app/BaiduNetworkLocation/BaiduNetworkLocation.apk
+  /system/priv-app/LegacyNetworkLocation/LegacyNetworkLocation.apk
+  /system/priv-app/NetworkLocation/NetworkLocation.apk
+
+  /system/app/BlankStore/BlankStore.apk
+  /system/app/DroidGuard/DroidGuard.apk
+  /system/app/GmsCore/GmsCore.apk
+  /system/app/GmsDroidGuard/GmsDroidguard.apk
+  /system/app/GsfProxy/GsfProxy.apk
+  /system/app/UnifiedNlp/UnifiedNlp.apk
+  /system/priv-app/BlankStore/BlankStore.apk
+  /system/priv-app/DroidGuard/DroidGuard.apk
+  /system/priv-app/GmsCore/GmsCore.apk
+  /system/priv-app/GmsDroidGuard/GmsDroidguard.apk
+  /system/priv-app/GsfProxy/GsfProxy.apk
+  /system/priv-app/UnifiedNlp/UnifiedNlp.apk
+
+  /system/app/BookmarkProvider/BookmarkProvider.apk
+  /system/app/SoundPicker/SoundPicker.apk
+  /system/priv-app/Tags/Tags.apk
+  /product/app/Aperture/Aperture.apk
+  /product/app/Camelot/Camelot.apk
+  /product/app/Gallery2/Gallery2.apk
+  /product/app/Glimpse/Glimpse.apk
+  /product/app/Jelly/Jelly.apk
+  /product/app/Recorder/Recorder.apk
+  /product/app/Twelve/Twelve.apk
+  /product/priv-app/HotwordEnrollmentOKGoogle/HotwordEnrollmentOKGoogle.apk
+  /product/priv-app/HotwordEnrollmentXGoogle/HotwordEnrollmentXGoogle.apk
+  /system_ext/app/MatLog/MatLog.apk
+  /system_ext/priv-app/AudioFX/AudioFX.apk
+";
+
+stuff_perm="
+  /system/app/MicroGGSFProxy
+  /system/app/SoundPickerPrebuilt
+  /system/bin/npem
+  /system/etc/default-permissions
+  /system/etc/permissions
+  /system/etc/sysconfig
+  /system/framework/com.google.android.maps.jar
+  /system/priv-app/Phonesky
+  /system/priv-app/MicroGGMSCore
+";
+
+pre_build_actions() {
+
+  return 0;
+
+}
+
+post_build_actions() {
+
+  return 0;
+
+}
+
+pre_install_actions() {
+
+  . "$filedir/util/func-defconf.sh";
+  user_conf;
+  microg_cleanup;
+  return 0;
+
+}
+
+post_install_actions() {
+
+  addon_install;
+  initscript_install;
+  touch "$mark_file";
+  return 0;
+
+}
+
+pre_uninstall_actions() {
+
+  [ "$magisk" = "no" ] && stuff_uninstall="$stuff_uninstall $addond_file $init_file";
+  rm -f "$mark_file";
+  return 0;
+
+}
+
+post_uninstall_actions() {
+
+  return 0;
+
+}
+
+mark_file="/data/.mmg";
+addond_file="/system/addon.d/10-$modname.sh";
+init_file="/system/etc/init.d/10-$modname";
